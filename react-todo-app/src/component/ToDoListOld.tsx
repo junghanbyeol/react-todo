@@ -39,7 +39,7 @@ interface IForm {
   extraError?: string;
 }
 
-function ToDoList() {
+function ToDoListOld() {
   const {
     register,
     handleSubmit,
@@ -51,6 +51,7 @@ function ToDoList() {
     },
   });
   const onValid = (data: IForm) => {
+    console.log('data', data)
     if (data.password !== data.password1) {
       setError(
         "password1",
@@ -124,4 +125,4 @@ function ToDoList() {
   );
 }
 
-export default ToDoList;
+export default ToDoListOld;
