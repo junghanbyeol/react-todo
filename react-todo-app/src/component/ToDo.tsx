@@ -31,13 +31,13 @@ function ToDo({ text, category, id }: IToDo) {
     <li>
       <span>{text}</span>
       {category !== Categories.DOING && (
-        <button name={Categories.DOING + ''} onClick={onClick}>Doing</button>
+        <button name={Categories.DOING} onClick={onClick}>Doing</button>
       )}
       {category !== Categories.TO_DO && (
-        <button name={Categories.TO_DO + ''} onClick={onClick}>ToDo</button>
+        <button name={Categories.TO_DO} onClick={onClick}>ToDo</button>
       )}
       {category !== Categories.DONE && (
-        <button name={Categories.DONE + ''} onClick={onClick}>Done</button>
+        <button name={Categories.DONE} onClick={onClick}>Done</button>
       )}
     </li>
   );
