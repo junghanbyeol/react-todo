@@ -1,46 +1,31 @@
-import React from "react";
-import { Categories, IToDo, toDoState } from "../atoms";
 import { useSetRecoilState } from "recoil";
+import { Categories, IToDo, toDoState } from "../atoms";
+import { Card, CardTitle, Actions, IconBtn } from "../style/kanbanStyles";
 
 function ToDo({ text, category, id }: IToDo) {
-  const setToDos = useSetRecoilState(toDoState)
-  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event.currentTarget.name)
-    const {
-      currentTarget: {name}
-    } = event
-    setToDos((prevToDos) => {
-      console.log('prevToDos', prevToDos)
-      return prevToDos.map((toDo) =>
-        toDo.id === id ? { ...toDo, category: name as any } : toDo
-      );
-    });
+  const setToDos = useSetRecoilState(toDoState);
 
-    // setToDos(oldToDos => {
-    //   const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id)
-    //   const oldToDo = oldToDos[targetIndex]
-    //   const newToDo = { text, id, category: name as any}
-    //   return [
-    //     ...oldToDos.slice(0, targetIndex),
-    //     newToDo,
-    //     ...oldToDos.slice(targetIndex + 1)
-    //   ]
-    // })
+  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = e.currentTarget;
+    setToDos((prev) => prev.map((t) => (t.id === id ? { ...t, category: name as any } : t)));
   };
+
   return (
-    <li>
-      <span>{text}</span>
-      {category !== Categories.DOING && (
-        <button name={Categories.DOING} onClick={onClick}>Doing</button>
-      )}
-      {category !== Categories.TO_DO && (
-        <button name={Categories.TO_DO} onClick={onClick}>ToDo</button>
-      )}
-      {category !== Categories.DONE && (
-        <button name={Categories.DONE} onClick={onClick}>Done</button>
-      )}
-    </li>
+    <Card>
+      <CardTitle>{text}</CardTitle>
+      <Actions>
+        {category !== Categories.DOING && (
+          <IconBtn variant="doing" name={Categories.DOING} onClick={onClick}>하는 중</IconBtn>
+        )}
+        {category !== Categories.DONE && (
+          <IconBtn variant="done" name={Categories.DONE} onClick={onClick}>다했어</IconBtn>
+        )}
+        {category !== Categories.TO_DO && (
+          <IconBtn name={Categories.TO_DO} onClick={onClick}>할래</IconBtn>
+        )}
+        <IconBtn variant="delete" onClick={()=>setToDos((prev)=>prev.filter(t=>t.id!==id))}>지울래</IconBtn>
+      </Actions>
+    </Card>
   );
 }
-
 export default ToDo;
